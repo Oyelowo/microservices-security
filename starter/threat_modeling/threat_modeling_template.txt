@@ -99,11 +99,15 @@ are not put in place.
 Information Disclosure: 
 Information in the datastore can be exposed if calls from the api-server to the store is not secured or encrypted.
 Access to the kubeconfig should also be restricted to be less permissive.
+An attacker could also access unencrypted information hardcoded into config file, secret or even in containers
+running on pods.
 
 Denial of Service: 
 The kube api-server can be overloaded and overwhelemed if not protected. An attacker may also 
 intercept and cause the api-server to schedule a pod incorrectly or even over allocate resources
 thereby starving the host and leading to an outage or wastage of resources.
+The lack of upper limit in kubernetes by default of when not imposed within deployments can also 
+lead to starvation of resources on the host machine.
 
 
 Elevation of privilege:

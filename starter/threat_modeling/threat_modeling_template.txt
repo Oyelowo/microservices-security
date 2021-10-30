@@ -121,9 +121,121 @@ that you want to harden based on the 5 attack surface areas you identified in St
 At least 1 of the 3 hardened findings should be different from the ones mentioned in 
 the exercise (i.e. 5.10, 5.14, and 5.22).
 
+Addressed
+[FAIL] 2.1 Ensure network traffic is restricted between containers on the default bridge (Scored)
+[FAIL] 5.12 Ensure that the container's root filesystem is mounted as read only (Scored)
+[FAIL] 5.13 Ensure that incoming container traffic is bound to a specific host interface (Scored)
+[FAIL] 2.2.b Ensure the logging level is set to 'info' (Scored)
+
+
+
+docker build . -t oyelowo/udacitysecurity:hardened-v1.0 -m 256mb --no-cache=true --cpu-shares 512 
+
+
+docker run -it --security-opt=no-new-privileges --restart=on-failure:5 oyelowo/udacitysecurity:hardened-v1.0 bash
+
+
+I set logging level to info
+
+Profile Applicability:
+ Level 1 - Docker - Linux
+Description:
+Set Docker daemon log level to info.
+Rationale:
+Setting up an appropriate log level, configures the Docker daemon to log events that you
+would want to review later. A base log level of info and above would capture all logs
+except debug logs. Until and unless required, you should not run Docker daemon at debug
+log level.
+Audit:
+To confirm this setting a combination of reviewing the dockerd start-up options and a
+review of any settings in /etc/docker/daemon.json should be completed.
+To review the dockerd startup options, use:
+ps -ef | grep dockerd
+Ensure that either the --log-level parameter is not present or if present, then it is set to
+info.
+The contents of /etc/docker/daemon.json should also be reviewed for this setting.
+Remediation:
+Ensure that the Docker daemon configuration file has the following configuration included
+"log-level": "info"
+Alternatively, run the Docker daemon as below:
+dockerd --log-level="info"
+Impact:
+None.
+
+
+
+docker run --rm -it --tty --cpu-shares 512 --security-opt=no-new-privileges oyelowo/udacitysecurity:hardened-v1.0 bash
+
+# docker run --rm -it --tty --memory 256m --security-opt=no-new-privileges oyelowo/udacitysecurity:hardened-v1.0 bash
+
+
+TODO:
+
+```sh
+docker build . -t opensuse/leap:latest -m 256mb --no-cache=true
+```
+
+```
+./docker-bench --benchmark cis-1.2 | grep FAIL  
+```
+
+If it comes back with nothing, it means it is not enabled
+```
+echo $DOCKER_CONTENT_TRUST 
+
+# enable it
+export DOCKER_CONTENT_TRUST=1
+```
+
+Solution: Memory usage:
+```
+docker ps --quiet --all | xargs docker inspect --format '{{ .Id }}: Memory={{
+.HostConfig.Memory }}'
+
+If this command returns 0, it means that memory limits are not in place; if it returns a nonzero value, it means that they are in place.
+
+b0c335d7655094ce4cc45660a8cc9521a86678aade3c99c9bff95e25c1fdc596: Memory=0
+668e34912118528adccdd58dd26d80f35f0f677c84e2614576241390a0ccc1cc: Memory=0
+8a4d5d83679f546e965e31b48aaa117627daf9501504fbe7838bc1df5c8bd12a: Memory=0
+363b799ff42a2e37b57d25137ab33c1b7acbb96b3e79b0a3b7626a3972356e33: Memory=0
+1c8e50aa1f5d918a0920b4a9376d5a526378fbc73ce22800a20dd7bb65c1a6a4: Memory=0
+41d69e0dad870e263efbdc7a77ee251e81273e3ddaa488c12397bdd6cb8659fb: Memory=0
+49a4ff1e3dab759c32fcef1df2027bded65f317581d6fdb25b36ab1e8a549516: Memory=0
+1db19fc75e0e1202f8073f82a0a739f1be2e212d75de3e13dbd27d06918a71d0: Memory=0
+14bab694b217228f4aae02ae09d26ff2dd495681c578c9d866f876541951433c: Memory=0
+
+
+Remediation:
+You should run the container with only as much memory as it requires by using the --
+memory argument.
+For example, you could run a container using the command below:
+docker run --interactive --tty --memory 256m centos /bin/bash
+In the example above, the container is started with a memory limit of 256 MB.
+Note that the output of the command below returns values in scientific notation if memory
+limits are in place.
+docker inspect --format='{{.Config.Memory}}' 7c5a2d4c7fe0
+
+For example, if the memory limit is set to 256 MB for a container instance, the output of the
+command above would be 2.68435456e+08 and NOT 256m. You should convert this value
+using a scientific calculator.
+Impact:
+If correct memory limits are not set on each container, one process can expand its usage
+and cause other containers to run out of resources.
+Default Value:
+By default, all containers on a Docker host share their resources equally and no memory
+limits are enforced
+```
+
+
+
+2. Ensure that registry certificate file ownership is set to root:rootdocker ps --quiet --all | xargs docker inspect --format '{{ .Id }}: Memory={{
+.HostConfig.Memory }}'
+NB:  Docker CIS benchmark defines a standard to harden the docker daemon, host, and engine.
+Docker-bench runs tests against the CIS framework, test are configured in YAML, and provides feedback on controls.
+Docker-bench should be run during the build phase of the SDLC.
 
 ### Protecting docker host 
-Drop al capabilities using --cap-drop=all
+Drop all capabilities using --cap-drop=all
 Use SELinux in enforcing mode once tested,
 D not use the --privileged flag
 

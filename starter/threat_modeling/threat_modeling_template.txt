@@ -1,8 +1,90 @@
 Docker Threat Modeling
 Given Docker's system components and the STRIDE framework, identify five potential threats that may arise.
 
+Spoofing: 
+Due to the lack of encryption of the the docker client communication to the docker daemon or 
+docker registry, the api call could be intercepted by man-in-the-middle attack.
+
+The sqli application is served over unencrypted port 8080 which exposes us to the 
+man-in-the-middle attack and traffic can as such be hijacked by an attacker by intercepting requests
+from the client to the server.
+
+Tampering: 
+The attacker can access the docker image and access confidential credentials for
+accessing our database and redis server as seen in `vuln_app/config/dev.yaml` which is
+used to initialize the application.
+With this, the attacker can tamper with our data.
+
+Also, with access to our application, the attacker can notice that users queries are performed directly
+without proper query sanitization which could expose us to sql injection and users could drop our tables 
+amongst other things.
+Such queries can be found in `vuln_app/sqli/dao` 
+e.g in ` 'SELECT id, name FROM students WHERE id = %s',` below, an attacker can drop the student table
+by passing dangerous invalid id as queries to drop our table, for instance if id is `1'); DROP TABLE students; --`,
+then the query becomes `SELECT id, name FROM students WHERE id = 1'); DROP TABLE students; --`.
+This could cause our table to be dropped and all our queries are vulnerable to this attack as the queries inputs are not 
+being validated nor sanitized.
+
+```py
+class Student(NamedTuple):
+    id: int
+    name: str
+
+    @classmethod
+    def from_raw(cls, raw: tuple):
+        return cls(*raw) if raw else None
+
+    @staticmethod
+    async def get(conn: Connection, id_: int):
+        async with conn.cursor() as cur:
+            await cur.execute(
+                'SELECT id, name FROM students WHERE id = %s',
+                (id_,),
+            )
+            r = await cur.fetchone()
+            return Student.from_raw(r)
+```
+
+
+
+Repudiation:
+Since our application is prone to man-in-the-middle attack, students and admin sessions could
+be hijacked with unintended actions and consequences.
+
+Information Disclosure: 
+As the database is prone to SQL injection attacks, and also the application not
+having proper access control layers, unauthorized users are able to access information and 
+potentially reveal users information including their password hashes.
+
+Denial of Service: 
+Because we are not allocating/limiting memory usage to the containers, this may lead to over-allocation
+to the app container when attacking routes huge traffic to the container causing the service to crash and be unavailable.
+Although the application would be behind a load balancer, attackers could render it unavailable
+due to the lack of rate limiting and firewall security implementations.
+
+The application is behind a load balancer, which may provide some denial of service protection. However, that's not the dedicated focus for a load balance. Lack of purpose-built rate-limiting or denial of service protection could result in exhausting resources needed to provide the service and lead to an outage.
+
+Elevation of Privilege: 
+As user is not specified in the dockerfile, it gives root user privilege which gives
+access to any container running within same pod e.g if we decide to run redis as a sidecar to
+our main application.
+An attacker may also take advantage of the vulnerable to SQL attack to make a user an administrator
+and thus, escalate their privilege to carry out unauthorized activities.
+
+
+
+
 Kubernetes Threat Modeling
 Given Kubernetes' system components and the STRIDE framework, identify five potential threats that may arise.
+
+Spoofing: Single Internet-accessible OpenSUSE leap web server running Nginx to serve traffic over ports 80 (HTTP) and 443 (HTTPS). Traffic is allowed on port 80 (HTTP) is unencrypted. This may allow an attacker to intercept communication between client and server, leading to spoofing of the traffic.
+Tampering: The web server is behind a load balancer. Data is stored in a SQL database. Using a load balancer provides security and scalability benefits. However, the application uses a SQL database, which may allow an attacker to pass URL parameters with a SQL injection, leading to tampering by querying data from the SQL database.
+Repudiation: If the webserver traffic is spoofed, an attacker could gain control of a user session. This could lead to repudiation for user actions on the application and fraudulent transactions.
+Information Disclosure: The application accepts credit cards processed via a third-party gateway provided by Braintree. The application logs all client/server transactions via a Syslog server. While the handling of sensitive payment data occurs by Braintree, the integration may involve log generation and storage that, if miss-configured, may lead to information disclosure of the credit card number. This will provide information to someone not authorized to access it.
+Denial of Service: The application is behind a load balancer, which may provide some denial of service protection. However, that's not the dedicated focus for a load balance. Lack of purpose-built rate-limiting or denial of service protection could result in exhausting resources needed to provide the service and lead to an outage.
+Elevation of Privilege: An attacker may attempt to abuse a regular user's login to escalate privilege to an administrative login such as admin or administrator. This may lead to the elevation of privilege, allowing them to do something they are not authorized to do.
+
+
 
 Docker-bench Run Results and Analysis
 From the failed findings, select and document 3 findings from the Docker-bench results that you want to harden based on the 5 attack surface areas you identified in Step 1. At least 1 of the 3 hardened findings should be different from the ones mentioned in the exercise (i.e. 5.10, 5.14, and 5.22).

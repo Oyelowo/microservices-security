@@ -77,13 +77,38 @@ and thus, escalate their privilege to carry out unauthorized activities.
 Kubernetes Threat Modeling
 Given Kubernetes' system components and the STRIDE framework, identify five potential threats that may arise.
 
-Spoofing: Single Internet-accessible OpenSUSE leap web server running Nginx to serve traffic over ports 80 (HTTP) and 443 (HTTPS). Traffic is allowed on port 80 (HTTP) is unencrypted. This may allow an attacker to intercept communication between client and server, leading to spoofing of the traffic.
-Tampering: The web server is behind a load balancer. Data is stored in a SQL database. Using a load balancer provides security and scalability benefits. However, the application uses a SQL database, which may allow an attacker to pass URL parameters with a SQL injection, leading to tampering by querying data from the SQL database.
-Repudiation: If the webserver traffic is spoofed, an attacker could gain control of a user session. This could lead to repudiation for user actions on the application and fraudulent transactions.
-Information Disclosure: The application accepts credit cards processed via a third-party gateway provided by Braintree. The application logs all client/server transactions via a Syslog server. While the handling of sensitive payment data occurs by Braintree, the integration may involve log generation and storage that, if miss-configured, may lead to information disclosure of the credit card number. This will provide information to someone not authorized to access it.
-Denial of Service: The application is behind a load balancer, which may provide some denial of service protection. However, that's not the dedicated focus for a load balance. Lack of purpose-built rate-limiting or denial of service protection could result in exhausting resources needed to provide the service and lead to an outage.
-Elevation of Privilege: An attacker may attempt to abuse a regular user's login to escalate privilege to an administrative login such as admin or administrator. This may lead to the elevation of privilege, allowing them to do something they are not authorized to do.
+Spoofing: 
+An attacker could intercept calls to our api-server if it is not encrypted with the transaction layer protocol.
+With this, they can gain access to our cluster and wreck havoc.
+Similarly, the api-servevr call on the master plane to the kubelet on worker plane
+could be intercepted but can be prevented by implementing trustless security protocol such as TLS.
+Call between services can also be spoofed and this can be mitigated by implementing trustless mutual TLS
+between services. Such is provided by service meshes like linkerdi and Istio.
 
+Tampering: 
+An attacker could modify data in the datastore such as the etcd or sqlite(in the case of default k3s configuration),
+and indirection affect the behavior of our our cluster and even cause misconfiguration.
+This could be mitigated by limiting or retricting user access to others to be at most read-only and prevent write or execution
+rights.
+
+Repudiation: 
+An attacker can also make unauthorized changes to the api-server and kubelet silently causing 
+issues that might go unknown for a long time or ever especially if proper logging and monitoring systems
+are not put in place. 
+
+Information Disclosure: 
+Information in the datastore can be exposed if calls from the api-server to the store is not secured or encrypted.
+Access to the kubeconfig should also be restricted to be less permissive.
+
+Denial of Service: 
+The kube api-server can be overloaded and overwhelemed if not protected. An attacker may also 
+intercept and cause the api-server to schedule a pod incorrectly or even over allocate resources
+thereby starving the host and leading to an outage or wastage of resources.
+
+
+Elevation of privilege:
+The kube api-server and the kubelet in the worker node can be susceptible to elevation of privilege if the 
+privileged flag is used. We want to limit the authorization of control.
 
 
 Docker-bench Run Results and Analysis

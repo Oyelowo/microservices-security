@@ -116,4 +116,39 @@ privileged flag is used. We want to limit the authorization of control.
 
 
 Docker-bench Run Results and Analysis
-From the failed findings, select and document 3 findings from the Docker-bench results that you want to harden based on the 5 attack surface areas you identified in Step 1. At least 1 of the 3 hardened findings should be different from the ones mentioned in the exercise (i.e. 5.10, 5.14, and 5.22).
+From the failed findings, select and document 3 findings from the Docker-bench results 
+that you want to harden based on the 5 attack surface areas you identified in Step 1. 
+At least 1 of the 3 hardened findings should be different from the ones mentioned in 
+the exercise (i.e. 5.10, 5.14, and 5.22).
+
+
+### Protecting docker host 
+Drop al capabilities using --cap-drop=all
+Use SELinux in enforcing mode once tested,
+D not use the --privileged flag
+
+### Protecting docker image security
+image hardening
+image signing
+verifying public images
+
+### Protecting client:
+Hardening the host system
+Running thelatest patched bersion of docker 
+Running anti-virus & endpoint detection and response (EDR) software.
+
+NB: docker build is run in root privileged.
+Docker daemon needs to create namespaces for isolation.
+e.g 
+1. Harden the host system
+2. Upgrade  client to the latest patched version,
+3. Use Antivirus & Endpoint detection and response (EDR) software to detect malicious processes and respond.
+This monitors for and alerts of suspicious processes. e.g Commercial examples include Crowdstrike Falcon and Carbon Black Response.
+4. Avoid using the --privileged flag
+
+Securing the image registry
+Image hardening, using secured vault like hashicorp security vault.
+Only use verifiable and trusted image,
+Image signing and ideally having Docker content trust can sevre as antispoofing control and validate authenticity of the images.
+
+Check image digest and compare with the image digest of the SHA256 providded in the image repository.

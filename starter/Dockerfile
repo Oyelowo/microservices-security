@@ -17,8 +17,8 @@ WORKDIR /udacity
 #install zypper 
 RUN zypper refs && zypper refresh
 
-RUN useradd -d /home/username -m -s /bin/bash username
+# RUN useradd -d /home/username -m -s /bin/bash username
 
 #add local user
-# USER $SEC_USER
-USER username 
+USER $SEC_USER
+# USER username 

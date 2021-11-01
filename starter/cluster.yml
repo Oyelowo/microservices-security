@@ -16,20 +16,20 @@ nodes:
   ssh_cert_path: ""
   labels: {}
   taints: []
-#- address: 192.168.50.102
-#  port: "22"
-#  internal_address: 192.168.50.102
-#  role:
-#  - worker
-#  hostname_override: node2
-#  user: root
-#  docker_socket: /var/run/docker.sock
-#  ssh_key: ""
-#  ssh_key_path: ~/.ssh/id_rsa
-#  ssh_cert: ""
-#  ssh_cert_path: ""
-#  labels: {}
-#  taints: []
+- address: 192.168.50.102
+ port: "22"
+ internal_address: 192.168.50.102
+ role:
+ - worker
+ hostname_override: node2
+ user: root
+ docker_socket: /var/run/docker.sock
+ ssh_key: ""
+ ssh_key_path: ~/.ssh/id_rsa
+ ssh_cert: ""
+ ssh_cert_path: ""
+ labels: {}
+ taints: []
 services:
   etcd:
     image: ""
@@ -46,7 +46,7 @@ services:
     path: ""
     uid: 52034
     gid: 52034
-    snapshot: null
+    snapshot: true
     retention: ""
     creation: ""
     backup_config: null
@@ -58,9 +58,9 @@ services:
     win_extra_args: {}
     win_extra_binds: []
     win_extra_env: []
-    service_cluster_ip_range: 10.43.0.0/16
+    service_cluster_ip_range: ""
     service_node_port_range: ""
-    pod_security_policy: false
+    pod_security_policy: true
     always_pull_images: false
     secrets_encryption_config:
       enabled: true
@@ -68,7 +68,6 @@ services:
     audit_log:
       enabled: true
       configuration: null
-    audit_log: null
     admission_configuration: null
     event_rate_limit:
       enabled: true
@@ -105,9 +104,9 @@ services:
     win_extra_env: []
     cluster_domain: cluster.local
     infra_container_image: ""
-    cluster_dns_server: 10.43.0.10
+    cluster_dns_server: ""
     fail_swap_on: false
-    generate_serving_certificate: false
+    generate_serving_certificate: true
   kubeproxy:
     image: ""
     extra_args: {}
@@ -117,7 +116,7 @@ services:
     win_extra_binds: []
     win_extra_env: []
 network:
-  plugin: calico
+  plugin: ""
   options: {}
   mtu: 0
   node_selector: {}
@@ -229,11 +228,7 @@ ingress:
   http_port: 0
   https_port: 0
   network_mode: ""
-  tolerations: []
-  default_backend: null
-  default_http_backend_priority_class_name: ""
-  nginx_ingress_controller_priority_class_name: ""
-cluster_name: ""
+cluster_name:
 cloud_provider:
   name: ""
 prefix_path: ""
@@ -253,10 +248,12 @@ monitoring:
   node_selector: {}
   update_strategy: null
   replicas: null
-  tolerations: []
-  metrics_server_priority_class_name: ""
 restore:
   restore: false
   snapshot_name: ""
-rotate_encryption_key: false
 dns: null
+upgrade_strategy:
+  max_unavailable_worker: ""
+  max_unavailable_controlplane: ""
+  drain: null
+  node_drain_input: null

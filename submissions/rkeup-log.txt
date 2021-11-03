@@ -406,3 +406,29 @@ root@4f5f62b76979:/# kube-bench run --targets etcd,master,controlplane,policies 
 [FAIL] 5.2.5 Minimize the admission of containers with allowPrivilegeEscalation (Automated)
 4 checks FAIL
 root@4f5f62b76979:/# 
+
+
+
+
+
+microservices-security/starter on  main [!?] via ⍱ v2.2.18 on ☁️  (eu-central-1) on ☁️  oyedayooyelowo1@gmail.com(europe-central2) took 1m32s 
+❯ kubectl --kubeconfig kube_config_cluster.yml get no
+NAME    STATUS     ROLES                      AGE    VERSION
+node9   NotReady   controlplane,etcd,worker   104s   v1.20.4
+
+microservices-security/starter on  main [!?] via ⍱ v2.2.18 on ☁️  (eu-central-1) on ☁️  oyedayooyelowo1@gmail.com(europe-central2) took 2s 
+❯ kubectl --kubeconfig kube_config_cluster.yml get pod -A
+
+NAMESPACE       NAME                                       READY   STATUS                  RESTARTS   AGE
+ingress-nginx   default-http-backend-65dd5949d9-7b9zd      0/1     ContainerCreating       0          72s
+ingress-nginx   nginx-ingress-controller-ldgct             0/1     Running                 2          72s
+kube-system     calico-kube-controllers-84847864d4-wbh99   0/1     ContainerCreating       0          96s
+kube-system     calico-node-nx6tt                          0/1     Init:CrashLoopBackOff   3          95s
+kube-system     coredns-669b8675c5-nxt7r                   0/1     ContainerCreating       0          90s
+kube-system     coredns-autoscaler-79599b9dc6-2l9sq        0/1     ContainerCreating       0          88s
+kube-system     metrics-server-655c6c5d66-6gbm8            0/1     ContainerCreating       0          81s
+kube-system     rke-coredns-addon-deploy-job-269jg         0/1     Completed               0          94s
+kube-system     rke-ingress-controller-deploy-job-45lzq    0/1     Completed               0          78s
+kube-system     rke-metrics-addon-deploy-job-j7shq         0/1     Completed               0          83s
+kube-system     rke-network-plugin-deploy-job-sq86l        0/1     Completed               0          100s
+kube-system     rke-user-addon-deploy-job-4r42p            0/1     Completed               0          73s

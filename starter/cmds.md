@@ -1,3 +1,10 @@
+```
+for namespace in $(kubectl --kubeconfig kube_config_cluster.yml get namespaces -A -o json | jq -r '.items[].metadata.name'); do
+  kubectl --kubeconfig kube_config_cluster.yml patch serviceaccount default -n ${namespace} -p "$(cat account_update.yaml)"
+done
+```
+
+
 docker run --pid=host -v /etc:/node/etc:ro -v /var:/node/var:ro -ti rancher/security-scan:v0.2.2 bash
 
 

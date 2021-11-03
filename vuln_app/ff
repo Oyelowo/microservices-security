@@ -1,5 +1,0 @@
-docker build -f Dockerfile.app .  -t oyelowo/vulnapp:latest
-docker push oyelowo/vulnapp:latest
-
-
-grype oyelowo/vulnapp:latest --scope all-layers

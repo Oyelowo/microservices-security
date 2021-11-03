@@ -8,5 +8,7 @@ brew install trivy
 docker build -f ./Dockerfile.app -t oyelowo/vulnapp
 
 grype oyelowo/vulnapp --scope all-layers 
+
+grype . --scope all-layers 
  
 trivy image oyelowo/vulnapp

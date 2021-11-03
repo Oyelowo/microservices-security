@@ -1,0 +1,9 @@
+Write at least 200 words describing a Kubernetes-specific test plan based on what you learned from the course. The test plan does not need to address specific hardening steps. Answer these two questions in your test plan:
+How will you test the changes?
+I will test the changes by first checking the audit section of the benchmark documentations
+to see that they have been addressed, after which I would simulate an attack to see that the changes
+have truly protected the cluster from the vulnerabilities.
+
+How will you ensure the changes don't negatively affect your cluster?
+I will first run this locally and/or in a test cluster where there are no sensitive information
+nor business impacts.

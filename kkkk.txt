@@ -1,0 +1,12 @@
+root@8079d548e4c7:/# kube-bench run --targets etcd,master,controlplane,policies --scored --config-dir=/etc/kube-bench/cfg --benchmark rke-cis-1.6-hardened | grep FAIL
+[FAIL] 1.1.12 Ensure that the etcd data directory ownership is set to etcd:etcd (Automated)
+[FAIL] 1.1.19 Ensure that the Kubernetes PKI directory and file ownership is set to root:root (Automated)
+2 checks FAIL
+[FAIL] 1.1.19 Ensure that the Kubernetes PKI directory and file ownership is set to root:root (Automated)
+1 checks FAIL
+0 checks FAIL
+[FAIL] 5.2.2 Minimize the admission of containers wishing to share the host process ID namespace (Automated)
+[FAIL] 5.2.3 Minimize the admission of containers wishing to share the host IPC namespace (Automated)
+[FAIL] 5.2.4 Minimize the admission of containers wishing to share the host network namespace (Automated)
+[FAIL] 5.2.5 Minimize the admission of containers with allowPrivilegeEscalation (Automated)
+4 checks FAIL

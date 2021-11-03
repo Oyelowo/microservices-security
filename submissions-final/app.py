@@ -5,12 +5,11 @@ from aiohttp_jinja2 import setup as setup_jinja
 from jinja2.loaders import PackageLoader
 from trafaret_config import commandline
 
-from sqli.middlewares import error_middleware, session_middleware
+from sqli.middlewares import session_middleware, error_middleware
 from sqli.schema.config import CONFIG_SCHEMA
 from sqli.services.db import setup_database
 from sqli.services.redis import setup_redis
-from sqli.utils.jinja2 import auth_user_processor, csrf_processor
-
+from sqli.utils.jinja2 import csrf_processor, auth_user_processor
 from .routes import setup_routes
 
 

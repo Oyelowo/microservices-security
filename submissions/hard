@@ -1,0 +1,15 @@
+root@d9d27ec059dc:/# kube-bench run --targets etcd,master,controlplane,policies --scored --config-dir=/etc/kube-bench/cfg --benchmark rke-cis-1.6-hardened | grep FAIL
+[FAIL] 1.1.12 Ensure that the etcd data directory ownership is set to etcd:etcd (Automated)
+1 checks FAIL
+[FAIL] 1.2.6 Ensure that the --kubelet-certificate-authority argument is set as appropriate (Automated)
+[FAIL] 1.2.10 Ensure that the admission control plugin EventRateLimit is set (Automated)
+[FAIL] 1.2.16 Ensure that the admission control plugin PodSecurityPolicy is set (Automated)
+[FAIL] 1.2.33 Ensure that the --encryption-provider-config argument is set as appropriate (Automated)
+[FAIL] 1.2.34 Ensure that encryption providers are appropriately configured (Automated)
+5 checks FAIL
+0 checks FAIL
+[FAIL] 5.2.2 Minimize the admission of containers wishing to share the host process ID namespace (Automated)
+[FAIL] 5.2.3 Minimize the admission of containers wishing to share the host IPC namespace (Automated)
+[FAIL] 5.2.4 Minimize the admission of containers wishing to share the host network namespace (Automated)
+[FAIL] 5.2.5 Minimize the admission of containers with allowPrivilegeEscalation (Automated)
+4 checks FAIL

@@ -23,4 +23,4 @@ Tampering	Integrity
 Repudiation	Non-repudiation
 Information disclosure	Confidentiality
 Denial of Service	Availability
-Elevation of Privilege	Authorization
+Elevation of Privilege	Authorizationk

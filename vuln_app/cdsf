@@ -1,0 +1,90 @@
+❯ grype oyelowo/vulnapp --scope all-layers             
+
+ ✔ Vulnerability DB        [no update available]
+ ✔ Loaded image            
+ ✔ Parsed image            
+ ✔ Cataloged packages      [163 packages]
+ ✔ Scanned image           [212 vulnerabilities]
+NAME             INSTALLED  FIXED-IN   VULNERABILITY        SEVERITY 
+Jinja2           2.10       2.10.1     GHSA-462w-v97r-4m45  High      
+PyYAML           3.13       5.4        GHSA-8q59-q68h-6hv4  Critical  
+aiohttp          3.5.3      3.7.4      GHSA-v6wp-4m6f-gcjg  Low       
+expat            2.2.7-r0   2.2.7-r1   CVE-2019-15903       High      
+krb5-libs        1.15.5-r0  1.15.5-r1  CVE-2020-28196       High      
+libcom_err       1.44.5-r0  1.44.5-r1  CVE-2019-5094        Medium    
+libcom_err       1.44.5-r0  1.44.5-r2  CVE-2019-5188        Medium    
+libcrypto1.1     1.1.1b-r1  1.1.1d-r0  CVE-2019-1547        Medium    
+libcrypto1.1     1.1.1b-r1  1.1.1d-r0  CVE-2019-1549        Medium    
+libcrypto1.1     1.1.1b-r1  1.1.1d-r0  CVE-2019-1563        Low       
+libcrypto1.1     1.1.1b-r1  1.1.1d-r2  CVE-2019-1551        Medium    
+libcrypto1.1     1.1.1b-r1  1.1.1g-r0  CVE-2020-1967        High      
+libcrypto1.1     1.1.1b-r1  1.1.1i-r0  CVE-2020-1971        Medium    
+libcrypto1.1     1.1.1b-r1  1.1.1j-r0  CVE-2021-23841       Medium    
+libcrypto1.1     1.1.1b-r1  1.1.1j-r0  CVE-2021-23840       High      
+libcrypto1.1     1.1.1b-r1  1.1.1j-r0  CVE-2021-23839       Low       
+libcrypto1.1     1.1.1b-r1  1.1.1k-r0  CVE-2021-3449        Medium    
+libcrypto1.1     1.1.1b-r1  1.1.1k-r0  CVE-2021-3450        High      
+libcrypto1.1     1.1.1b-r1             CVE-2021-3711        Critical  
+libcrypto1.1     1.1.1b-r1             CVE-2021-3712        High      
+libcrypto1.1     1.1.1b-r1             CVE-2019-1552        Low       
+libcrypto1.1     1.1.1k-r0             CVE-2021-3711        Critical  
+libcrypto1.1     1.1.1k-r0             CVE-2021-3712        High      
+libldap          2.4.48-r2             CVE-2020-36222       High      
+libldap          2.4.48-r2             CVE-2020-36223       High      
+libldap          2.4.48-r2             CVE-2020-36230       High      
+libldap          2.4.48-r2             CVE-2020-36226       High      
+libldap          2.4.48-r2             CVE-2020-36229       High      
+libldap          2.4.48-r2             CVE-2020-36224       High      
+libldap          2.4.48-r2             CVE-2020-36221       High      
+libldap          2.4.48-r2             CVE-2020-36225       High      
+libldap          2.4.48-r2             CVE-2020-36227       High      
+libldap          2.4.48-r2             CVE-2015-3276        Medium    
+libldap          2.4.48-r2             CVE-2020-36228       High      
+libldap          2.4.48-r2             CVE-2021-27212       High      
+libpq            11.11-r0              CVE-2021-32029       Medium    
+libpq            11.11-r0              CVE-2017-8806        Medium    
+libpq            11.11-r0              CVE-2021-32027       High      
+libpq            11.11-r0              CVE-2021-32028       Medium    
+libssl1.1        1.1.1b-r1  1.1.1d-r0  CVE-2019-1547        Medium    
+libssl1.1        1.1.1b-r1  1.1.1d-r0  CVE-2019-1549        Medium    
+libssl1.1        1.1.1b-r1  1.1.1d-r0  CVE-2019-1563        Low       
+libssl1.1        1.1.1b-r1  1.1.1d-r2  CVE-2019-1551        Medium    
+libssl1.1        1.1.1b-r1  1.1.1g-r0  CVE-2020-1967        High      
+libssl1.1        1.1.1b-r1  1.1.1i-r0  CVE-2020-1971        Medium    
+libssl1.1        1.1.1b-r1  1.1.1j-r0  CVE-2021-23841       Medium    
+libssl1.1        1.1.1b-r1  1.1.1j-r0  CVE-2021-23840       High      
+libssl1.1        1.1.1b-r1  1.1.1j-r0  CVE-2021-23839       Low       
+libssl1.1        1.1.1b-r1  1.1.1k-r0  CVE-2021-3449        Medium    
+libssl1.1        1.1.1b-r1  1.1.1k-r0  CVE-2021-3450        High      
+libssl1.1        1.1.1b-r1             CVE-2019-1552        Low       
+libssl1.1        1.1.1b-r1             CVE-2021-3712        High      
+libssl1.1        1.1.1b-r1             CVE-2021-3711        Critical  
+libssl1.1        1.1.1k-r0             CVE-2021-3711        Critical  
+libssl1.1        1.1.1k-r0             CVE-2021-3712        High      
+musl             1.1.20-r4  1.1.20-r5  CVE-2019-14697       Critical  
+musl             1.1.20-r4  1.1.20-r6  CVE-2020-28928       Medium    
+musl-utils       1.1.20-r4  1.1.20-r5  CVE-2019-14697       Critical  
+musl-utils       1.1.20-r4  1.1.20-r6  CVE-2020-28928       Medium    
+openssl-dev      1.1.1k-r0             CVE-2021-3711        Critical  
+openssl-dev      1.1.1k-r0             CVE-2021-3712        High      
+postgresql-dev   11.11-r0              CVE-2021-32028       Medium    
+postgresql-dev   11.11-r0              CVE-2021-32029       Medium    
+postgresql-dev   11.11-r0              CVE-2017-8806        Medium    
+postgresql-dev   11.11-r0              CVE-2021-32027       High      
+postgresql-libs  11.11-r0              CVE-2021-32029       Medium    
+postgresql-libs  11.11-r0              CVE-2017-8806        Medium    
+postgresql-libs  11.11-r0              CVE-2021-32027       High      
+postgresql-libs  11.11-r0              CVE-2021-32028       Medium    
+sqlite-libs      3.28.0-r0  3.28.0-r1  CVE-2019-16168       Medium    
+sqlite-libs      3.28.0-r0  3.28.0-r2  CVE-2019-19242       Medium    
+sqlite-libs      3.28.0-r0  3.28.0-r2  CVE-2019-19244       High      
+sqlite-libs      3.28.0-r0  3.28.0-r3  CVE-2020-11655       High      
+sqlite-libs      3.28.0-r0             CVE-2020-13631       Medium    
+sqlite-libs      3.28.0-r0             CVE-2020-13632       Medium    
+sqlite-libs      3.28.0-r0             CVE-2019-19645       Medium    
+sqlite-libs      3.28.0-r0             CVE-2020-13434       Medium    
+sqlite-libs      3.28.0-r0             CVE-2019-19646       Critical  
+sqlite-libs      3.28.0-r0             CVE-2020-11656       Critical  
+sqlite-libs      3.28.0-r0             CVE-2020-13435       Medium    
+sqlite-libs      3.28.0-r0             CVE-2020-13630       High      
+sqlite-libs      3.28.0-r0             CVE-2020-15358       Medium    
